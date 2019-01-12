@@ -1,9 +1,9 @@
 import React from "react";
 import Intro from "./Intro";
-import {Box} from "../elements/box/Box";
-import {Colors} from "../elements/color/Colors";
-import {HBox} from "../elements/box/HBox";
-import {Button} from "../elements/components/Button";
+import {Box} from "../../elements/box/Box";
+import {Colors} from "../../elements/color/Colors";
+import {HBox} from "../../elements/box/HBox";
+import {Button} from "../../elements/components/Button";
 
 const AccessButtons = (props) =>
     <Box justifyContent={'flex-end'} flex={0}>

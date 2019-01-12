@@ -1,10 +1,10 @@
-import {Logo} from "../elements/text/Logo";
+import {Logo} from "../../elements/text/Logo";
 import * as React from "react";
-import {Box} from "../elements/box/Box";
+import {Box} from "../../elements/box/Box";
 import {StatusBar} from "react-native";
-import {Screen} from "../elements/box/screen/Screen";
+import {Screen} from "../../elements/box/screen/Screen";
 import {LinearGradient} from "expo";
-import {CenterBox} from "../elements/box/CenterBox";
+import {CenterBox} from "../../elements/box/CenterBox";
 
 export default class Intro extends React.Component {
 

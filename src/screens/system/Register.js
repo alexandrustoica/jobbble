@@ -1,10 +1,10 @@
 import React from "react";
 import Intro from "./Intro";
-import {Colors} from "../elements/color/Colors";
-import {Button} from "../elements/components/Button";
-import {EditText} from "../elements/components/EditText";
+import {Colors} from "../../elements/color/Colors";
+import {Button} from "../../elements/components/Button";
+import {EditText} from "../../elements/components/EditText";
 import { KeyboardAvoidingView, ScrollView, StyleSheet} from "react-native";
-import {NavigationBar} from "../elements/components/NavigationBar";
+import {NavigationBar} from "../../elements/components/NavigationBar";
 
 class RegisterForm extends React.Component {
 
