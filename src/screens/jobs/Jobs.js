@@ -1,13 +1,13 @@
 import React from "react";
 import {Icon} from "react-native-elements";
-import {StatusBar, FlatList} from "react-native";
+import {StatusBar, FlatList, Text} from "react-native";
 import {store} from '../../service/Store';
 import {JobActions} from "../../jobs/JobActions";
 import {Screen} from "../../elements/box/screen/Screen";
 import {NavigationBar} from "../../elements/components/NavigationBar";
 import {Box} from "../../elements/box/Box";
 import {ActionButton} from "../../elements/components/ActionButton";
-import {Text} from "expo";
+
 
 export default class Jobs extends React.Component {
 
@@ -40,7 +40,7 @@ export default class Jobs extends React.Component {
         <FlatList
             data={items}
             keyExtractor={(item, id) => id}
-            renderItem={({item}) => <Text>{item.id}</Text>}/>;
+            renderItem={({item}) => <Text>{"test"}</Text>}/>;
 
     render = () =>
         <Screen backgroundColor={'white'}>
@@ -63,7 +63,7 @@ export default class Jobs extends React.Component {
                      height: '100%'
                  }}>
                 <ActionButton onPress={() =>
-                    this.props.navigation.navigate('AddReport')}/>
+                    this.props.navigation.navigate('AddJob')}/>
             </Box>
         </Screen>
 }
