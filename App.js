@@ -1,12 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {store} from "./src/service/Store"
+import {UserActions} from "./src/users/UserActions";
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Test</Text>
-      </View>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => store.dispatch(UserActions.register({
+            password: "test",
+            username: "test",
+            role: "STUDENT"
+        }))} >
+            <Text>Test</Text>
+        </TouchableOpacity>
     );
   }
 }
