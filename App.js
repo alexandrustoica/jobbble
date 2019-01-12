@@ -1,30 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {store} from "./src/service/Store"
-import {UserActions} from "./src/users/UserActions";
 
+import {createAppContainer, createStackNavigator} from "react-navigation";
+import {Welcome} from "./src/system/Welcome";
+import {Login} from "./src/system/Login";
+import {Register} from "./src/system/Register";
 
-export default class App extends React.Component {
-  render() {
-    return (
-        <TouchableOpacity
-            style={styles.container}
-            onPress={() => store.dispatch(UserActions.register({
-            password: "test",
-            username: "test",
-            role: "STUDENT"
-        }))} >
-            <Text>Test</Text>
-        </TouchableOpacity>
-    );
-  }
-}
+const Nav = createStackNavigator({
+        Welcome: {screen: Welcome},
+        Login: {screen: Login},
+        Register: {screen: Register}
+    }, {
+        index: 0,
+        headerMode: 'screen',
+        navigationOptions: {
+            gesturesEnabled: false
+        }
+    });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default createAppContainer(Nav);
