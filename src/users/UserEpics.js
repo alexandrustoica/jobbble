@@ -12,7 +12,8 @@ const RegisterUserEpic = action$ => action$.pipe(
             method: "POST",
             headers: Headers.defaultHeaders,
             body: JSON.stringify(action.payload)
-        })).pipe(map(response =>
+        }).then(response => response.json()))
+            .pipe(map(response =>
             ({type: "REGISTER_DONE", payload: response})))));
 
 const LoginUserEpic = action$ => action$.pipe(

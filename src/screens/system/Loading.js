@@ -1,10 +1,10 @@
 import {AsyncStorage, StatusBar} from "react-native";
-import {Box} from "../elements/box/Box";
-import {Logo} from "../elements/text/Logo";
+import {Box} from "../../elements/box/Box";
+import {Logo} from "../../elements/text/Logo";
 import * as React from "react";
 import {LinearGradient} from "expo";
-import {CenterBox} from "../elements/box/CenterBox";
-import {Screen} from "../elements/box/screen/Screen";
+import {CenterBox} from "../../elements/box/CenterBox";
+import {Screen} from "../../elements/box/screen/Screen";
 
 export class Loading extends React.Component {
 

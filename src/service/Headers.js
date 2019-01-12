@@ -5,7 +5,8 @@ export const Headers = {
         'Content-Type': 'application/json',
     },
     withToken: (token) => ({
-        ...defaultHeaders,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': token
     })
 };

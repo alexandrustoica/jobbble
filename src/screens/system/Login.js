@@ -1,12 +1,12 @@
 import React from "react";
 import Intro from "./Intro";
-import {Colors} from "../elements/color/Colors";
-import {EditText} from "../elements/components/EditText";
-import {Button} from "../elements/components/Button";
+import {Colors} from "../../elements/color/Colors";
+import {EditText} from "../../elements/components/EditText";
+import {Button} from "../../elements/components/Button";
 import {Keyboard, KeyboardAvoidingView} from "react-native";
-import {NavigationBar} from "../elements/components/NavigationBar";
-import {UserActions} from "../users/UserActions";
-import {store} from "../service/Store"
+import {NavigationBar} from "../../elements/components/NavigationBar";
+import {UserActions} from "../../users/UserActions";
+import {store} from "../../service/Store"
 import {fromEvent} from "rxjs"
 
 class LoginForm extends React.Component {
@@ -20,8 +20,6 @@ class LoginForm extends React.Component {
         };
     }
 
-
-
     async componentWillMount() {
         this.__keyboardShowSubscription =
             fromEvent(Keyboard, 'keyboardWillShow')
@@ -32,9 +30,8 @@ class LoginForm extends React.Component {
             .subscribe(() => this.setState({flexValue: 2}));
     }
     __unsubscribe = store.subscribe(() => {
-        const {token} = store.getState();
-        console.log(token);
-        if (token !== null) {
+        const {token} = store.getState().users;
+        if (token !== "" && token !== null) {
             this.__unsubscribe();
             this.props.navigation.navigate('Jobs');
         }
