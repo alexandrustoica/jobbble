@@ -7,12 +7,15 @@ import {Screen} from "../../elements/box/screen/Screen";
 import {NavigationBar} from "../../elements/components/NavigationBar";
 import {Box} from "../../elements/box/Box";
 import {ActionButton} from "../../elements/components/ActionButton";
+import {ItemJob} from "./JobItem";
 
 
 export default class Jobs extends React.Component {
 
     static navigationOptions = {
-        header: null,
+        header: {
+            visible: false,
+        },
         title: 'Jobs',
         drawerIcon: () => <Icon name={'filter-none'} color={'black'}/>
     };
@@ -22,7 +25,7 @@ export default class Jobs extends React.Component {
         const {token} = store.getState().users;
         this.state = {
             token: token,
-            state: store.getState().jobs,
+            jobs: store.getState().jobs,
         }
     }
 
@@ -30,17 +33,11 @@ export default class Jobs extends React.Component {
         store.dispatch(JobActions.all(this.state.token))
     };
 
-    __unsubscribe = store.subscribe(() => {
-        this.setState({state: store.getState().all})
-    });
+    __unsubscribe = store.subscribe(() =>
+        this.setState({jobs: store.getState().jobs})
+    );
 
     componentWillUnmount = () => this.__unsubscribe();
-
-    __showJobs = (items) =>
-        <FlatList
-            data={items}
-            keyExtractor={(item, id) => id}
-            renderItem={({item}) => <Text>{"test"}</Text>}/>;
 
     render = () =>
         <Screen backgroundColor={'white'}>
@@ -51,8 +48,12 @@ export default class Jobs extends React.Component {
                 text={"Jobs"}
                 leftIcon={{name: "menu", color: "black"}}
                 rightIcon={{name: "search", color: "black"}}
-                leftAction={() => this.props.navigation.navigate('DrawerOpen')}/>
-            {this.__showJobs(this.state.all)}
+                leftAction={() => this.props.navigation.openDrawer()}/>
+            <FlatList
+                data={this.state.jobs.all}
+                keyExtractor={(item, id) => id}
+                renderItem={({item}) =>
+                    <ItemJob {...this.props} item={item}/>} />
             <Box justifyContent={'flex-end'}
                  alignItems={'flex-end'}
                  pointerEvents={'box-none'}

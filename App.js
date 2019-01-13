@@ -6,6 +6,7 @@ import {Login} from "./src/screens/system/Login";
 import {Register} from "./src/screens/system/Register";
 import Jobs from "./src/screens/jobs/Jobs";
 import AddJob from "./src/screens/jobs/AddJob";
+import {Job} from "./src/screens/jobs/Job";
 
 console.disableYellowBox = true;
 
@@ -24,11 +25,15 @@ const Nav = createStackNavigator({
                 headerVisible: false
             }
         },
-        AddJob: {screen: AddJob}
+        AddJob: {screen: AddJob},
+        Job: {screen: Job}
     }, {
         index: 0,
-        headerMode: 'screen',
+        headerMode: 'modal',
         navigationOptions: {
+            header: {
+              visible: false
+            },
             gesturesEnabled: false
         }
     });
