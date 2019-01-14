@@ -1,5 +1,6 @@
 const initialState = {
-    token: ""
+    token: "",
+    all: []
 };
 
 export const users = (state = initialState, action) => {
@@ -16,6 +17,14 @@ export const users = (state = initialState, action) => {
         ['GET_CURRENT_USER_DONE']: (state, action) => ({
             ...state,
             currentUser: action.payload
+        }),
+        ['GET_USER_DONE']: (state, action) => ({
+        ...state,
+        wantedUser: action.payload
+        }),
+        ['GET_USERS_DONE']: (state, action) => ({
+            ...state,
+            all: action.payload
         })
     });
 

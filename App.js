@@ -7,26 +7,24 @@ import {Register} from "./src/screens/system/Register";
 import Jobs from "./src/screens/jobs/Jobs";
 import AddJob from "./src/screens/jobs/AddJob";
 import {Job} from "./src/screens/jobs/Job";
+import {User} from "./src/screens/users/User";
+import {Users} from "./src/screens/users/Users";
 
 console.disableYellowBox = true;
 
 const Menu = createDrawerNavigator({
-    Jobs: {screen: Jobs}
+    Jobs: Jobs,
+    Users: Users
 });
 
 const Nav = createStackNavigator({
         Welcome: {screen: Welcome},
         Login: {screen: Login},
         Register: {screen: Register},
-        Jobs: {
-            screen: Menu,
-            navigationOptions: {
-                header: false,
-                headerVisible: false
-            }
-        },
+        Jobs: Menu,
         AddJob: {screen: AddJob},
-        Job: {screen: Job}
+        Job: {screen: Job},
+        User: {screen: User}
     }, {
         index: 0,
         headerMode: 'modal',

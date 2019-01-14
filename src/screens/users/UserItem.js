@@ -28,7 +28,6 @@ const SubtitleStyle = {
 };
 
 const TitleStyle = {
-    marginTop: 10,
     marginLeft: 10,
     fontSize: 18,
     fontWeight: 'bold'
@@ -43,11 +42,14 @@ const Cover = (props) =>
 export const ItemUser = (props) =>
     <TouchableOpacity
         activeOpacity={1.0}
-        // onPress={() =>
-        //     props.navigation.navigate('Job', {item: props.item})}
+        onPress={() =>
+            props.navigation.navigate('User', {userId: props.item.id})}
         style={CardStyle}>
-        <HBox style={{padding: 10, alignItems: 'center'}}>
+        <HBox style={{padding: 10,
+            alignItems: 'center',
+            justifyContent: 'center'}}>
             <Image style={{width: 50, height: 50}}
+                   borderRadius={25}
                    source={{uri: props.item.profileImageUrl}}/>
             <Box flexDirection={'column'}>
                 <Text style={TitleStyle}>{props.item.name}</Text>
