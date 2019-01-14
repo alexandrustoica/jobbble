@@ -15,26 +15,30 @@ export default class AddJob extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const {token} = store.getState().users;
         this.state = {
-            title: '',
-            text: '',
-            company: '',
-            location: '',
-            position: ''
+            token: token,
+            newJob: {
+                title: '',
+                text: '',
+                company: '',
+                location: '',
+                position: ''
+            }
         }
     }
 
-    __saveNewJob = (job) => {
-        const {token} = store.getState().users;
-       store.dispatch(JobActions.create(job, token))
+    __saveNewJob = () => {
+        store.dispatch(JobActions.create(this.state.newJob, this.state.token))
     };
 
     __goToJobsScreen = () =>
         this.props.navigation.navigate('Jobs');
 
-    __saveJobAndGoToJobsScreen = (job) =>
+    __saveJobAndGoToJobsScreen = () =>
         R.compose(this.__goToJobsScreen,
-            this.__saveNewJob)(job);
+            this.__saveNewJob)();
 
     render = () =>
         <Screen backgroundColor={'white'}>
@@ -49,43 +53,41 @@ export default class AddJob extends React.Component {
                     leftAction={() => this.props.navigation.goBack()}/>
                 <EditText
                     flex={1}
-
                     fontSize={20}
                     text={"Write a title for your job."}
-                    onChangeText={(text) => this.setState({title: text})}/>
+                    onChangeText={(title) => this.setState({newJob:
+                            {...this.state.newJob, title: title}})}/>
                 <EditText
                     flex={1}
                     fontSize={14}
                     text={"Write a short description for your job."}
-                    onChangeText={(text) => this.setState({text: text})}/>
+                    onChangeText={(text) => this.setState({newJob:
+                            {...this.state.newJob, text: text}})}/>
                 <EditText
                     flex={1}
                     fontSize={14}
                     text={"Location"}
-                    onChangeText={(location) => this.setState({location: location})}/>
+                    onChangeText={(location) => this.setState({newJob:
+                            {...this.state.newJob, location: location}})}/>
                 <EditText
                     flex={1}
                     fontSize={14}
                     text={"Company"}
-                    onChangeText={(company) => this.setState({company: company})}/>
+                    onChangeText={(company) => this.setState({newJob:
+                            {...this.state.newJob, company: company}})}/>
                 <EditText
                     flex={1}
                     fontSize={14}
                     text={"Position"}
-                    onChangeText={(position) => this.setState({position: position})}/>
+                    onChangeText={(position) => this.setState({newJob:
+                            {...this.state.newJob, position: position}})}/>
                 <Button
                         backgroundColor={Colors.BLUE}
                         text={"SAVE JOB"}
                         height={70}
                         width={'100%'}
                         flex={null}
-                        onPress={() => this.__saveJobAndGoToJobsScreen({
-                            title: this.state.title,
-                            text: this.state.text,
-                            company: this.state.company,
-                            location: this.state.location,
-                            position: this.state.position
-                        })}/>
+                        onPress={() => this.__saveJobAndGoToJobsScreen()}/>
             </ScrollView>
         </Screen>
 }

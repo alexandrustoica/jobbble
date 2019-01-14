@@ -19,7 +19,9 @@ export class Job extends React.Component {
     constructor(props) {
         super(props);
         const {token} = store.getState().users;
+        const {currentUser} = store.getState().users;
         this.state = {
+            currentUser: currentUser,
             token: token,
             item: this.props.navigation.state.params.item
         }
@@ -37,12 +39,13 @@ export class Job extends React.Component {
 
     componentWillUnmount = () => this.__unsubscribe();
 
-    __isCurrentUserACandidate = () => {
-        const {currentUser} = store.getState().users;
-        return this.state.item.applicants.length !== 0 &&
+    __isCurrentUserTheAuthor = () =>
+        this.state.currentUser.id === this.state.item.author.id;
+
+    __isCurrentUserACandidate = () =>
+        this.state.item.applicants.length !== 0 &&
             this.state.item.applicants
-            .filter(it => it.id === currentUser.id) !== []
-    };
+            .filter(it => it.id === this.state.currentUser.id) !== [];
 
     __apply = () => store.dispatch(
         JobActions.apply(this.state.item.id, this.state.token));
@@ -50,16 +53,30 @@ export class Job extends React.Component {
     __unapply = () => store.dispatch(
         JobActions.unapply(this.state.item.id, this.state.token));
 
+    __renderNavigationBar = () => this.__isCurrentUserTheAuthor() ?
+        <NavigationBar
+            text={"Job"}
+            align={'left'}
+            rightIcon={{name: 'delete', color: 'black'}}
+            rightAction={() => {
+                store.dispatch(JobActions.delete(
+                    this.state.item.id, this.state.token));
+                this.props.navigation.goBack();
+            }}
+            leftIcon={{name: 'arrow-back', color: 'black'}}
+            leftAction={() => this.props.navigation.goBack()}/> :
+        <NavigationBar
+            text={"Job"}
+            align={'left'}
+            leftIcon={{name: 'arrow-back', color: 'black'}}
+            leftAction={() => this.props.navigation.goBack()}/>;
+
     render = () =>
         <Screen backgroundColor={'white'}>
             <StatusBar
                 backgroundColor="transparent"
                 barStyle="dark-content"/>
-            <NavigationBar
-                text={"Job"}
-                align={'left'}
-                leftIcon={{name: 'arrow-back', color: 'black'}}
-                leftAction={() => this.props.navigation.goBack()}/>
+            {this.__renderNavigationBar()}
             <ScrollView style={{flex: 1}}>
                 <Box flexDirection={'column'} style={{margin: 20}}>
                 <Text style={{marginRight: 20, fontSize: 18}}>

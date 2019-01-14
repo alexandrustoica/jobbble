@@ -3,27 +3,46 @@ import Intro from "./Intro";
 import {Colors} from "../../elements/color/Colors";
 import {Button} from "../../elements/components/Button";
 import {EditText} from "../../elements/components/EditText";
-import { KeyboardAvoidingView, ScrollView, StyleSheet} from "react-native";
+import { KeyboardAvoidingView, ScrollView} from "react-native";
 import {NavigationBar} from "../../elements/components/NavigationBar";
+import {store} from "../../service/Store";
+import {UserActions} from "../../users/UserActions";
 
 class RegisterForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            error: {
-                visible: false,
-                message: "nothing",
-            },
             username: '',
             password: '',
-            confirmPassword: '',
             email: '',
             name: '',
-            role: 'USER',
-            flexValue: 6
+            age: 0,
+            url: '',
+            flexValue: 10
         }
     }
+
+    __unsubscribeRegister = store.subscribe(() => {
+        const {currentUser} = store.getState().users;
+        if (currentUser !== undefined && currentUser !== null) {
+            this.__unsubscribeRegister();
+            store.dispatch(UserActions.login({
+                username: currentUser.username,
+                password: this.state.password
+            }));
+        }
+    });
+
+    __unsubscribe = store.subscribe(() => {
+        const {token} = store.getState().users;
+        if (token !== "" && token !== null) {
+            this.__unsubscribe();
+            this.props.navigation.navigate('Jobs');
+        }
+    });
+
+    componentWillUnmount = () => this.__unsubscribeRegister();
 
     render = () => <KeyboardAvoidingView
         behaviour={'padding'}
@@ -37,38 +56,47 @@ class RegisterForm extends React.Component {
                 text={'Name'}
                 iconName={'perm-identity'}
                 iconColor={'black'}
-                onChangeText={async (name) =>
-                    await this.setState({name: name})}/>
+                onChangeText={(name) => this.setState({name: name})}/>
             <EditText
                 text={'Username'}
                 iconName={'fingerprint'}
                 iconColor={'black'}
-                onChangeText={async (username) =>
-                    await this.setState({username: username})}/>
-            <EditText
-                text={'Email'}
-                iconName={'email'}
-                iconColor={'black'}
-                onChangeText={async (email) =>
-                    await this.setState({email: email})}/>
+                onChangeText={(username) =>
+                    this.setState({username: username})}/>
             <EditText
                 text={'Password'}
                 password={true}
                 iconName={'vpn-key'}
                 iconColor={'black'}
-                onChangeText={async (password) =>
-                    await this.setState({password: password})}/>
+                onChangeText={(password) =>
+                    this.setState({password: password})}/>
             <EditText
-                text={'Confirm Password'}
-                password={true}
-                iconName={'vpn-key'}
+                text={'Email'}
+                iconName={'email'}
                 iconColor={'black'}
-                onChangeText={async (confirmPassword) =>
-                    await this.setState({confirmPassword: confirmPassword})}/>
+                onChangeText={(email) => this.setState({email: email})}/>
+           <EditText
+                text={'Age'}
+                iconName={'healing'}
+                iconColor={'black'}
+                onChangeText={(age) => this.setState({age: age})}/>
+            <EditText
+                text={'Profile Image URL'}
+                iconName={'slideshow'}
+                iconColor={'black'}
+                onChangeText={(url) =>
+                    this.setState({url: url})}/>
             <Button
                 backgroundColor={Colors.BLUE}
                 height={70}
-                onPress={() => {}}
+                onPress={() => store.dispatch(UserActions.register({
+                    username: this.state.username,
+                    password: this.state.password,
+                    email: this.state.email,
+                    age: this.state.age,
+                    name: this.state.name,
+                    profileImageUrl: this.state.url
+                }))}
                 text='Register'/>
         </ScrollView>
     </KeyboardAvoidingView>
