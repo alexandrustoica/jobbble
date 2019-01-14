@@ -1,4 +1,5 @@
 const initialState = {
+    currentJob: null,
     all: []
 };
 
@@ -10,6 +11,24 @@ const JobHandlers= ({
     ['CREATE_JOB_DONE']: (state, action) => ({
         ...state,
         all: [...state.all, action.payload]
+    }),
+    ['APPLY_JOB_DONE']: (state, action) => ({
+        ...state,
+        currentJob: action.payload,
+        all: [...state.all.filter(
+            it => it.id !== action.payload.id), action.payload]
+    }),
+    ['UNAPPLY_JOB_DONE']: (state, action) => ({
+        ...state,
+        currentJob: action.payload,
+        all: [...state.all.filter(
+            it => it.id !== action.payload.id), action.payload]
+    }),
+    ['GET_JOB_DONE']: (state, action) => ({
+        ...state,
+        currentJob: action.payload,
+        all: [...state.all.filter(
+            it => it.id !== action.payload.id), action.payload]
     }),
 });
 

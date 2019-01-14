@@ -7,12 +7,13 @@ import {Icon} from "react-native-elements";
 export const Button = (props) =>
     <TouchableOpacity
         onPress={props.onPress}
-        style={{
+        style={[{
             backgroundColor: props.backgroundColor,
             height: props.height,
             width: props.width,
             flex: props.flex,
-        }}>
+            borderRadius: props.borderRadius,
+        }, props.style]}>
         <CenterBox>
             <Icon name={props.icon.name} color={props.icon.color}/>
             <Text style={{
@@ -28,6 +29,7 @@ export const Button = (props) =>
 
 Button.defaultProps = {
     onPress: null,
+    style: {},
     backgroundColor: Colors.BLACK,
     flex: 1,
     width: null,
@@ -35,5 +37,6 @@ Button.defaultProps = {
     height: 70,
     textColor: Colors.WHITE,
     text: 'Button',
+    borderRadius: 0,
     textSize: 16,
 };
