@@ -8,7 +8,7 @@ import {Endpoints} from "../service/Endpoints";
 const RegisterUserEpic = action$ => action$.pipe(
     ofType("REGISTER"),
     mergeMap(action =>
-        from(fetch(Endpoints.students, {
+        from(fetch(Endpoints.hrs, {
             method: "POST",
             headers: Headers.defaultHeaders,
             body: JSON.stringify(action.payload)

@@ -55,6 +55,17 @@ const GetJobEpic = action$ => action$.pipe(
             .pipe(map(response =>
                 ({type: "GET_JOB_DONE", payload: response})))));
 
+
+const DeleteJobEpic = action$ => action$.pipe(
+    ofType("DELETE_JOB"),
+    mergeMap(action =>
+        from(fetch(Endpoints.jobs + `${action.payload}`, {
+            method: "DELETE",
+            headers: Headers.withToken(action.token)
+        }).then(response => response.json()))
+            .pipe(map(response =>
+                ({type: "DELETE_JOB_DONE", payload: response})))));
+
 export const JobEpic = combineEpics(
     GetAllJobsEpic, CreateJobEpic,
-    ApplyJobEpic, UnapplyJobEpic, GetJobEpic);
+    ApplyJobEpic, UnapplyJobEpic, GetJobEpic, DeleteJobEpic);

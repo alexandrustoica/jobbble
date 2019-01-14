@@ -26,6 +26,10 @@ const JobHandlers= ({
         all: [...state.all.filter(
             it => it.id !== action.payload.id), action.payload]
     }),
+    ['DELETE_JOB_DONE']: (state, action) => ({
+        ...state,
+        all: state.all.filter(it => it.id !== action.payload.id)
+    }),
 });
 
 export const jobs = (state = initialState, action) => {
