@@ -3,7 +3,7 @@ import {Box} from "../../elements/box/Box";
 import React from "react";
 import {HBox} from "../../elements/box/HBox";
 import {Text, TouchableOpacity} from "react-native";
-import moment from "moment";
+import {Image} from "react-native";
 
 const CardStyle = {
     marginTop: 10,
@@ -22,25 +22,17 @@ const CardStyle = {
 };
 
 const SubtitleStyle = {
-    marginTop: 5,
-    marginLeft: 20,
-    fontSize: 22,
+    marginLeft: 10,
+    fontSize: 18,
     fontWeight: 'regular'
 };
 
 const TitleStyle = {
     marginTop: 10,
-    marginLeft: 20,
-    fontSize: 24,
+    marginLeft: 10,
+    fontSize: 18,
     fontWeight: 'bold'
 };
-
-const DateStyle = {
-    marginTop: 5,
-    marginLeft: 20,
-    marginBottom: 20,
-};
-
 
 const Cover = (props) =>
     <Box alignItems={'center'}
@@ -48,29 +40,26 @@ const Cover = (props) =>
          style={[{backgroundColor: props.coverColor}]}>
     </Box>;
 
-
-export const ItemJob = (props) =>
+export const ItemUser = (props) =>
     <TouchableOpacity
         activeOpacity={1.0}
-        onPress={() =>
-            props.navigation.navigate('Job', {item: props.item})}
+        // onPress={() =>
+        //     props.navigation.navigate('Job', {item: props.item})}
         style={CardStyle}>
-        <Cover {...props}/>
-        <HBox style={{paddingRight: 20}}>
+        <HBox style={{padding: 10, alignItems: 'center'}}>
+            <Image style={{width: 50, height: 50}}
+                   source={{uri: props.item.profileImageUrl}}/>
             <Box flexDirection={'column'}>
-                <Text style={TitleStyle}>{props.item.title}</Text>
-                <Text style={SubtitleStyle}>{props.item.company}</Text>
-                <Text style={DateStyle}>{
-                    moment(props.item.createdBy,
-                        "YYYY-MM-DD@h:mm:ss").fromNow()}</Text>
+                <Text style={TitleStyle}>{props.item.name}</Text>
+                <Text style={SubtitleStyle}>{`@${props.item.username}`}</Text>
             </Box>
         </HBox>
     </TouchableOpacity>;
 
-ItemJob.defaultProps = {
+ItemUser.defaultProps = {
     item: {
+        profileImageUrl: 'test',
         title: "test",
-        createdBy: "",
     },
     coverColor: Colors.LIGHT_BLUE
 };

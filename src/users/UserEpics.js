@@ -27,4 +27,15 @@ const LoginUserEpic = action$ => action$.pipe(
             ({type: "LOGIN_DONE", payload:
                     response.headers.get("Authorization")})))));
 
-export const UserEpic = combineEpics(RegisterUserEpic, LoginUserEpic);
+const GetCurrentUserEpic = action$ => action$.pipe(
+    ofType("GET_CURRENT_USER"),
+    mergeMap(action =>
+        from(fetch(Endpoints.users + "me", {
+            method: "GET",
+            headers: Headers.withToken(action.token)
+        }).then(response => response.json()))
+            .pipe(map(response =>
+                ({type: "GET_CURRENT_USER_DONE", payload: response})))));
+
+export const UserEpic = combineEpics(
+    RegisterUserEpic, LoginUserEpic, GetCurrentUserEpic);

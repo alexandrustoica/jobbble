@@ -33,6 +33,7 @@ class LoginForm extends React.Component {
         const {token} = store.getState().users;
         if (token !== "" && token !== null) {
             this.__unsubscribe();
+            store.dispatch(UserActions.me(token));
             this.props.navigation.navigate('Jobs');
         }
     });

@@ -12,6 +12,10 @@ export const users = (state = initialState, action) => {
         ['REGISTER_DONE']: (state, action) => ({
             ...state,
             currentUser: action.payload
+        }),
+        ['GET_CURRENT_USER_DONE']: (state, action) => ({
+            ...state,
+            currentUser: action.payload
         })
     });
 
