@@ -38,7 +38,7 @@ const ApplyJobEpic = action$ => action$.pipe(
 const UnapplyJobEpic = action$ => action$.pipe(
     ofType("UNAPPLY_JOB"),
     mergeMap(action =>
-        from(fetch(Endpoints.jobs + `apply/${action.payload}`, {
+        from(fetch(Endpoints.jobs + `unapply/${action.payload}`, {
             method: "PUT",
             headers: Headers.withToken(action.token)
         }).then(response => response.json()))

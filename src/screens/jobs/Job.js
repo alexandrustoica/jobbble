@@ -36,8 +36,16 @@ export class Job extends React.Component {
 
     componentWillUnmount = () => this.__unsubscribe();
 
+    __isCurrentUserACandidate = () => {
+        const {currentUser} = store.getState().users;
+        return this.state.item.applicants.length !== 0 &&
+            this.state.item.applicants
+            .filter(it => it.id === currentUser.id) !== []
+    };
+
     __apply = () => store.dispatch(
         JobActions.apply(this.state.item.id, this.state.token));
+
     __unapply = () => store.dispatch(
         JobActions.unapply(this.state.item.id, this.state.token));
 
@@ -63,7 +71,7 @@ export class Job extends React.Component {
                 </Text>
                 <Text style={{fontWeight: 'bold', marginTop: 10, fontSize: 18}}>
                     {this.state.item.company}
-                </Text>
+                </Text><ItemUser {...this.props} item={this.state.item.author}/>
                 <Text style={{marginTop: 10, fontSize: 16}}>
                     {this.state.item.text}
                 </Text>
@@ -81,11 +89,13 @@ export class Job extends React.Component {
                             <ItemUser {...this.props} item={item}/>} />
                     <Button
                         backgroundColor={Colors.BLUE}
-                        text={"APPLY"}
+                        text={this.__isCurrentUserACandidate() ?
+                            "UNAPPLY" :" APPLY"}
                         height={70}
                         width={'100%'}
                         flex={null}
-                        onPress={() => this.__apply()}/>
+                        onPress={() => this.__isCurrentUserACandidate() ?
+                            this.__unapply(): this.__apply()}/>
                 </Box>
 
             </ScrollView>

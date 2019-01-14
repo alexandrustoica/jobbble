@@ -14,15 +14,11 @@ const JobHandlers= ({
     }),
     ['APPLY_JOB_DONE']: (state, action) => ({
         ...state,
-        currentJob: action.payload,
-        all: [...state.all.filter(
-            it => it.id !== action.payload.id), action.payload]
+        currentJob: action.payload
     }),
     ['UNAPPLY_JOB_DONE']: (state, action) => ({
         ...state,
-        currentJob: action.payload,
-        all: [...state.all.filter(
-            it => it.id !== action.payload.id), action.payload]
+        currentJob: action.payload
     }),
     ['GET_JOB_DONE']: (state, action) => ({
         ...state,
