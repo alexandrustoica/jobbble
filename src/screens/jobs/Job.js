@@ -24,6 +24,7 @@ export class Job extends React.Component {
             item: this.props.navigation.state.params.item
         }
     }
+
     componentWillMount = () =>
         store.dispatch(JobActions.get(this.state.item.id, this.state.token));
 
